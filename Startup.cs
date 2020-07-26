@@ -31,6 +31,9 @@ namespace BethanysPieShop
             // Register our own services
             services.AddScoped<IPieRepository, PieRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<ShoppingCart>(sp => ShoppingCart.GetCart(sp));
+            services.AddHttpContextAccessor();
+            services.AddSession();
             //services.AddTransient() - creating an instance of application each time
             //services.AddSingleton() - creating one instance of application
 
@@ -49,6 +52,7 @@ namespace BethanysPieShop
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseSession();   // middleware to use session
 
             app.UseRouting();
 
